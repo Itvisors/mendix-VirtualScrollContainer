@@ -1,10 +1,17 @@
 import { ReactElement } from "react";
-import { HelloWorldSample } from "./components/HelloWorldSample";
 
 import { VirtualScrollContainerContainerProps } from "../typings/VirtualScrollContainerProps";
 
 import "./ui/VirtualScrollContainer.css";
+import { VirtualScrollContainerComponent } from "./components/VirtualScrollContainerComponent";
 
-export function VirtualScrollContainer({ sampleText }: VirtualScrollContainerContainerProps): ReactElement {
-    return <HelloWorldSample sampleText={sampleText ? sampleText : "World"} />;
+export function VirtualScrollContainer(props: VirtualScrollContainerContainerProps): ReactElement {
+    return (
+        <VirtualScrollContainerComponent
+            widgetName={props.name}
+            widgetClass={props.class}
+            data={props.data}
+            content={props.content}
+        ></VirtualScrollContainerComponent>
+    );
 }

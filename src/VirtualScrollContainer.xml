@@ -5,12 +5,16 @@
         xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
     <name>Virtual Scroll Container</name>
     <description>Virtual Scroll Container</description>
-    <icon/>
+    <studioProCategory>Data containers</studioProCategory>
     <properties>
         <propertyGroup caption="General">
-            <property key="sampleText" type="string" required="false">
-                <caption>Default value</caption>
-                <description>Sample text input</description>
+            <property key="data" type="datasource" isList="true" defaultType="Database">
+                <caption>Data source</caption>
+                <description />
+            </property>
+            <property key="content" type="widgets" dataSource="data">
+	            <caption>Content</caption>
+                <description />
             </property>
         </propertyGroup>
     </properties>
