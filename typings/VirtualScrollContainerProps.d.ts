@@ -13,6 +13,7 @@ export interface VirtualScrollContainerContainerProps {
     tabIndex?: number;
     data: ListValue;
     content: ListWidgetValue;
+    pageSize: number;
 }
 
 export interface VirtualScrollContainerPreviewProps {
@@ -28,4 +29,5 @@ export interface VirtualScrollContainerPreviewProps {
     translate: (text: string) => string;
     data: {} | { caption: string } | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
+    pageSize: number | null;
 }

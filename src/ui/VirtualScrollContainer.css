@@ -1,6 +1,7 @@
 /*
 Place your custom CSS here
 */
-.widget-hello-world {
-
+.virtual-scroll-container {
+    height: 100%;
+    overflow-y: auto;
 }

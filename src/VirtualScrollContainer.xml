@@ -16,6 +16,11 @@
 	            <caption>Content</caption>
                 <description />
             </property>
+            <property key="pageSize" type="integer" defaultValue="50">
+                <caption>Page size</caption>
+                <description />
+            </property>
+
         </propertyGroup>
     </properties>
 </widget>

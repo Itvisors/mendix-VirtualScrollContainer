@@ -1,9 +1,7 @@
 import { ReactElement } from "react";
-
 import { VirtualScrollContainerContainerProps } from "../typings/VirtualScrollContainerProps";
-
-import "./ui/VirtualScrollContainer.css";
 import { VirtualScrollContainerComponent } from "./components/VirtualScrollContainerComponent";
+import "./ui/VirtualScrollContainer.css";
 
 export function VirtualScrollContainer(props: VirtualScrollContainerContainerProps): ReactElement {
     return (

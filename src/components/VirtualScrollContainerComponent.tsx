@@ -9,10 +9,7 @@ export interface VirtualScrollContainerComponentProps {
 }
 
 export function VirtualScrollContainerComponent(props: VirtualScrollContainerComponentProps): ReactElement {
-    let className = props.widgetName + " virtual-scroll-container";
-    if (props.widgetClass) {
-        className += " " + props.widgetClass;
-    }
+    let className = props.widgetClass + " virtual-scroll-container ";
     const { data, content } = props;
     if (!data.items) {
         className += " empty-list";
