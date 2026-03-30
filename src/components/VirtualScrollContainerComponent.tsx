@@ -1,5 +1,5 @@
 import { ListValue, ListWidgetValue } from "mendix";
-import { ReactElement, useRef, useEffect } from "react";
+import { ReactElement, ReactNode, useRef, useEffect } from "react";
 
 export interface VirtualScrollContainerComponentProps {
     widgetName: string;
@@ -8,12 +8,26 @@ export interface VirtualScrollContainerComponentProps {
     content: ListWidgetValue;
 }
 
+interface refDataType {
+    currentScrollPosition: number;
+    itemsLoadedCount: number;
+    listRows: ReactNode[] | undefined;
+    hasMoreItems: boolean;
+}
+
 export function VirtualScrollContainerComponent(props: VirtualScrollContainerComponentProps): ReactElement {
     const layoutRef = useRef<HTMLDivElement>(null);
-    const scrollPositionRef = useRef<number>(0);
+    // Store all datasource related data
+    // useRef i.s.o. useState as useRef will not trigger a render after the value is updated
+    const dataRef = useRef<refDataType>({
+        currentScrollPosition: 0,
+        itemsLoadedCount: 0,
+        listRows: undefined,
+        hasMoreItems: false
+    });
 
     let className = props.widgetClass + " virtual-scroll-container ";
-    const { data, content } = props;
+    const { data } = props;
 
     useEffect(() => {
         const container = layoutRef.current;
@@ -23,8 +37,8 @@ export function VirtualScrollContainerComponent(props: VirtualScrollContainerCom
 
         const frameId = requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-                // console.info("Scroll herstellen naar:", scrollPositionRef.current);
-                container.scrollTop = scrollPositionRef.current;
+                // console.info("Scroll to:", scrollPositionRef.current);
+                container.scrollTop = dataRef.current.currentScrollPosition;
             });
         });
 
@@ -38,8 +52,8 @@ export function VirtualScrollContainerComponent(props: VirtualScrollContainerCom
         if (!container) {
             return;
         }
-        // console.info("Scroll positie opgeslagen:", container.scrollTop);
-        scrollPositionRef.current = container.scrollTop;
+        // console.info("Scroll position stored:", container.scrollTop);
+        dataRef.current.currentScrollPosition = container.scrollTop;
     };
 
     if (!data.items) {
@@ -47,13 +61,15 @@ export function VirtualScrollContainerComponent(props: VirtualScrollContainerCom
         return <div className={className}></div>;
     }
 
+    const { content } = props;
+    dataRef.current.listRows = data.items.map((item, index) => (
+        <div key={item.id} className={`virtual-scroll-container-item item-${index}`}>
+            {content.get(item)}
+        </div>
+    ));
     return (
         <div className={className} ref={layoutRef} onScroll={handleScroll}>
-            {data.items.map((item, index) => (
-                <div key={item.id} className={`virtual-scroll-container-item item-${index}`}>
-                    {content.get(item)}
-                </div>
-            ))}
+            {dataRef.current.listRows}
         </div>
     );
 }
