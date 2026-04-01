@@ -1,24 +1,31 @@
 ## VirtualScrollContainer
-[Virtual Scroll Container]
+Virtual Scroll Container
 
 ## Features
-[feature highlights]
+- Show a list of data
+- When the users scrolls down far enough, another page of data is loaded
+- Keep scroll position when refreshing data
+
+## Limitations
+- Do not place in Layout Grid or Dataview.
 
 ## Usage
-[step by step instructions]
+- Place widget on a blank page, no LayoutGrid or Dataview
+- You can place container above and below the widget to create a header and/or footer
+- Place content inside the content drop zone
+- Set a page size, it should be large enough to show more items than fit in the browser viewport. 50 is usually a good starting point, depending on your row height and reference display size
+- Configure the other properties
 
-## Demo project
-[link to sandbox]
+### Data change date
+By default Mendix will reload the datasource, this really happens a lot. So the widget takes control over the datasource.
 
-## Issues, suggestions and feature requests
-[link to GitHub issues]
+When you want to reload or refresh the data in the widget, set the `data change date` attribute to `[%CurrentDateTime%]` 
 
-## Development and contribution
+### Widget action
+The widget will take the action specified here when the `data change date` attribute receives a new value
 
-1. Install NPM package dependencies by using: `npm install`. If you use NPM v7.x.x, which can be checked by executing `npm -v`, execute: `npm install --legacy-peer-deps`.
-1. Run `npm start` to watch for code changes. On every change:
-    - the widget will be bundled;
-    - the bundle will be included in a `dist` folder in the root directory of the project;
-    - the bundle will be included in the `deployment` and `widgets` folder of the Mendix test project.
+Possible values:
+- Reload: reload and reset to first page
+- Refresh: reload the data loaded earlier, keeping scroll position
 
-[specify contribution]
+The widget does not reset the action attribute value as that would trigger another render

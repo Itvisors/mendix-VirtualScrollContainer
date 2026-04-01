@@ -10,6 +10,10 @@ export function VirtualScrollContainer(props: VirtualScrollContainerContainerPro
             widgetClass={props.class}
             data={props.data}
             content={props.content}
+            pageSize={props.pageSize}
+            dataChangeDate={props.dataChangeDateAttr.value}
+            widgetAction={props.widgetActionAttr.value}
+            logToConsole={props.logToConsole}
         ></VirtualScrollContainerComponent>
     );
 }

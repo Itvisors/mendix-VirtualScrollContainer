@@ -20,7 +20,28 @@
                 <caption>Page size</caption>
                 <description />
             </property>
-
+            <property key="dataChangeDateAttr" type="attribute">
+                <caption>Data change date</caption>
+                <description>Update the date in your logic to make the widget reload or refresh the data from the datasource</description>
+                <attributeTypes>
+                    <attributeType name="DateTime"/>
+                </attributeTypes>
+            </property>
+            <property key="widgetActionAttr" type="attribute">
+                <caption>Widget action</caption>
+                <description>Enumeration with (at least) the following values:
+- Reload: reload and reset to first page
+- Refresh: reload the data loaded earlier, keeping scroll position</description>
+                <attributeTypes>
+                    <attributeType name="Enum"/>
+                </attributeTypes>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Advanced">
+            <property key="logToConsole" type="boolean" defaultValue="false">
+                <caption>Console logging</caption>
+                <description>Log widget progress to the console. Useful to get timing on data retrieval etc</description>
+            </property>
         </propertyGroup>
     </properties>
 </widget>

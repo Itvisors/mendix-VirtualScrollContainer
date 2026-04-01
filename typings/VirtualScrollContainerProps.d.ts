@@ -4,7 +4,7 @@
  * @author Mendix Widgets Framework Team
  */
 import { ComponentType, CSSProperties, ReactNode } from "react";
-import { ListValue, ListWidgetValue } from "mendix";
+import { EditableValue, ListValue, ListWidgetValue } from "mendix";
 
 export interface VirtualScrollContainerContainerProps {
     name: string;
@@ -14,6 +14,9 @@ export interface VirtualScrollContainerContainerProps {
     data: ListValue;
     content: ListWidgetValue;
     pageSize: number;
+    dataChangeDateAttr: EditableValue<Date>;
+    widgetActionAttr: EditableValue<string>;
+    logToConsole: boolean;
 }
 
 export interface VirtualScrollContainerPreviewProps {
@@ -30,4 +33,7 @@ export interface VirtualScrollContainerPreviewProps {
     data: {} | { caption: string } | { type: string } | null;
     content: { widgetCount: number; renderer: ComponentType<{ children: ReactNode; caption?: string }> };
     pageSize: number | null;
+    dataChangeDateAttr: string;
+    widgetActionAttr: string;
+    logToConsole: boolean;
 }

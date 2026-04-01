@@ -15,6 +15,44 @@ public final class Microflows
 	private Microflows() {}
 
 	// These are the microflows for the TestVirtualSrollContainer module
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aCT_RefreshBuilder(
+		testvirtualsrollcontainer.proxies.WidgetContext _widgetContext
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("TestVirtualSrollContainer.ACT_Refresh");
+		builder = builder.withParam("WidgetContext", _widgetContext);
+		return builder;
+	}
+
+	public static void aCT_Refresh(
+		IContext context,
+		testvirtualsrollcontainer.proxies.WidgetContext _widgetContext
+	)
+	{
+		aCT_RefreshBuilder(
+				_widgetContext
+			)
+			.execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aCT_ReloadBuilder(
+		testvirtualsrollcontainer.proxies.WidgetContext _widgetContext
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("TestVirtualSrollContainer.ACT_Reload");
+		builder = builder.withParam("WidgetContext", _widgetContext);
+		return builder;
+	}
+
+	public static void aCT_Reload(
+		IContext context,
+		testvirtualsrollcontainer.proxies.WidgetContext _widgetContext
+	)
+	{
+		aCT_ReloadBuilder(
+				_widgetContext
+			)
+			.execute(context);
+	}
 	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aCT_TestData_GenerateBuilder()
 	{
 		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("TestVirtualSrollContainer.ACT_TestData_Generate");
@@ -47,5 +85,15 @@ public final class Microflows
 				_viewTestData
 			)
 			.execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aCT_VirtualScrollContainer_OpenPageBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("TestVirtualSrollContainer.ACT_VirtualScrollContainer_OpenPage");
+		return builder;
+	}
+
+	public static void aCT_VirtualScrollContainer_OpenPage(IContext context)
+	{
+		aCT_VirtualScrollContainer_OpenPageBuilder().execute(context);
 	}
 }
