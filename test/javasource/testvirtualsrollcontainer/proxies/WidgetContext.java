@@ -21,7 +21,8 @@ public class WidgetContext implements com.mendix.systemwideinterfaces.core.IEnti
 	public enum MemberNames
 	{
 		DataChangeTrigger("DataChangeTrigger"),
-		WidgetAction("WidgetAction");
+		WidgetAction("WidgetAction"),
+		WidgetContext_Session("TestVirtualSrollContainer.WidgetContext_Session");
 
 		private final java.lang.String metaName;
 
@@ -71,6 +72,15 @@ public class WidgetContext implements com.mendix.systemwideinterfaces.core.IEnti
 	{
 		com.mendix.systemwideinterfaces.core.IMendixObject mendixObject = com.mendix.core.Core.retrieveId(context, mendixIdentifier);
 		return testvirtualsrollcontainer.proxies.WidgetContext.initialize(context, mendixObject);
+	}
+
+	public static java.util.List<testvirtualsrollcontainer.proxies.WidgetContext> load(com.mendix.systemwideinterfaces.core.IContext context, java.lang.String xpathConstraint) throws com.mendix.core.CoreException
+	{
+		return com.mendix.core.Core.createXPathQuery(String.format("//%1$s%2$s", entityName, xpathConstraint))
+			.execute(context)
+			.stream()
+			.map(obj -> testvirtualsrollcontainer.proxies.WidgetContext.initialize(context, obj))
+			.collect(java.util.stream.Collectors.toList());
 	}
 
 	/**
@@ -151,6 +161,53 @@ public class WidgetContext implements com.mendix.systemwideinterfaces.core.IEnti
 			getMendixObject().setValue(context, MemberNames.WidgetAction.toString(), widgetaction.toString());
 		} else {
 			getMendixObject().setValue(context, MemberNames.WidgetAction.toString(), null);
+		}
+	}
+
+	/**
+	 * @throws com.mendix.core.CoreException
+	 * @return value of WidgetContext_Session
+	 */
+	public final system.proxies.Session getWidgetContext_Session() throws com.mendix.core.CoreException
+	{
+		return getWidgetContext_Session(getContext());
+	}
+
+	/**
+	 * @param context
+	 * @return value of WidgetContext_Session
+	 * @throws com.mendix.core.CoreException
+	 */
+	public final system.proxies.Session getWidgetContext_Session(com.mendix.systemwideinterfaces.core.IContext context) throws com.mendix.core.CoreException
+	{
+		system.proxies.Session result = null;
+		com.mendix.systemwideinterfaces.core.IMendixIdentifier identifier = getMendixObject().getValue(context, MemberNames.WidgetContext_Session.toString());
+		if (identifier != null) {
+			result = system.proxies.Session.load(context, identifier);
+		}
+		return result;
+	}
+
+	/**
+	 * Set value of WidgetContext_Session
+	 * @param widgetcontext_session
+	 */
+	public final void setWidgetContext_Session(system.proxies.Session widgetcontext_session)
+	{
+		setWidgetContext_Session(getContext(), widgetcontext_session);
+	}
+
+	/**
+	 * Set value of WidgetContext_Session
+	 * @param context
+	 * @param widgetcontext_session
+	 */
+	public final void setWidgetContext_Session(com.mendix.systemwideinterfaces.core.IContext context, system.proxies.Session widgetcontext_session)
+	{
+		if (widgetcontext_session == null) {
+			getMendixObject().setValue(context, MemberNames.WidgetContext_Session.toString(), null);
+		} else {
+			getMendixObject().setValue(context, MemberNames.WidgetContext_Session.toString(), widgetcontext_session.getMendixObject().getId());
 		}
 	}
 

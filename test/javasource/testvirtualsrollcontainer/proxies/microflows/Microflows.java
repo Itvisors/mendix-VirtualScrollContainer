@@ -6,6 +6,7 @@ package testvirtualsrollcontainer.proxies.microflows;
 
 import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
+import com.mendix.systemwideinterfaces.core.IMendixObject;
 
 public final class Microflows
 {
@@ -63,26 +64,45 @@ public final class Microflows
 	{
 		aCT_TestData_GenerateBuilder().execute(context);
 	}
-	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aCT_ViewTestData_SaveBuilder(
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aCT_ViewTestData_Save_DG2Builder(
 		testvirtualsrollcontainer.proxies.TestData _testData,
 		testvirtualsrollcontainer.proxies.ViewTestData _viewTestData
 	)
 	{
-		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("TestVirtualSrollContainer.ACT_ViewTestData_Save");
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("TestVirtualSrollContainer.ACT_ViewTestData_Save_DG2");
 		builder = builder.withParam("TestData", _testData);
 		builder = builder.withParam("ViewTestData", _viewTestData);
 		return builder;
 	}
 
-	public static void aCT_ViewTestData_Save(
+	public static void aCT_ViewTestData_Save_DG2(
 		IContext context,
 		testvirtualsrollcontainer.proxies.TestData _testData,
 		testvirtualsrollcontainer.proxies.ViewTestData _viewTestData
 	)
 	{
-		aCT_ViewTestData_SaveBuilder(
+		aCT_ViewTestData_Save_DG2Builder(
 				_testData,
 				_viewTestData
+			)
+			.execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder aCT_ViewTestData_Save_VirtualScrollContainerBuilder(
+		testvirtualsrollcontainer.proxies.TestData _testData
+	)
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("TestVirtualSrollContainer.ACT_ViewTestData_Save_VirtualScrollContainer");
+		builder = builder.withParam("TestData", _testData);
+		return builder;
+	}
+
+	public static void aCT_ViewTestData_Save_VirtualScrollContainer(
+		IContext context,
+		testvirtualsrollcontainer.proxies.TestData _testData
+	)
+	{
+		aCT_ViewTestData_Save_VirtualScrollContainerBuilder(
+				_testData
 			)
 			.execute(context);
 	}
@@ -95,5 +115,16 @@ public final class Microflows
 	public static void aCT_VirtualScrollContainer_OpenPage(IContext context)
 	{
 		aCT_VirtualScrollContainer_OpenPageBuilder().execute(context);
+	}
+	public static com.mendix.core.actionmanagement.MicroflowCallBuilder sUB_WidgetContext_GetOrCreateBuilder()
+	{
+		com.mendix.core.actionmanagement.MicroflowCallBuilder builder = Core.microflowCall("TestVirtualSrollContainer.SUB_WidgetContext_GetOrCreate");
+		return builder;
+	}
+
+	public static testvirtualsrollcontainer.proxies.WidgetContext sUB_WidgetContext_GetOrCreate(IContext context)
+	{
+		Object result = sUB_WidgetContext_GetOrCreateBuilder().execute(context);
+		return result == null ? null : testvirtualsrollcontainer.proxies.WidgetContext.initialize(context, (IMendixObject) result);
 	}
 }

@@ -19,6 +19,7 @@ interface refDataType {
     listRows: ReactNode[] | undefined;
     hasMoreItems: boolean;
     previousDataChangeDateMillis: number;
+    previousDatasourceValueStatus: ValueStatus | undefined;
 }
 
 const WIDGET_ACTION_RELOAD = "Reload";
@@ -43,7 +44,8 @@ export function VirtualScrollContainerComponent(props: VirtualScrollContainerCom
         itemsLoadedCount: 0,
         listRows: undefined,
         hasMoreItems: false,
-        previousDataChangeDateMillis: 0
+        previousDataChangeDateMillis: 0,
+        previousDatasourceValueStatus: undefined
     });
 
     const { data, pageSize, dataChangeDate, widgetAction, logToConsole } = props;
@@ -73,10 +75,11 @@ export function VirtualScrollContainerComponent(props: VirtualScrollContainerCom
         dataRef.current.previousDataChangeDateMillis = dataChangeDate.getTime();
         switch (widgetAction) {
             case WIDGET_ACTION_RELOAD:
-                // Reset datasource info
+                // Reset datasource info, datasource may skip loading state if it is really fast so set previous value to undefined
                 dataRef.current.currentScrollPosition = 0;
                 dataRef.current.currentDataSourceOffset = 0;
                 dataRef.current.itemsLoadedCount = 0;
+                dataRef.current.previousDatasourceValueStatus = undefined;
                 // Set to load one page
                 data.setLimit(pageSize);
                 // Trigger reload
@@ -87,6 +90,7 @@ export function VirtualScrollContainerComponent(props: VirtualScrollContainerCom
                 // Set to load all data previously loaded
                 data.setOffset(0);
                 data.setLimit(dataRef.current.itemsLoadedCount);
+                dataRef.current.previousDatasourceValueStatus = undefined;
                 // Trigger reload
                 data.reload();
                 break;
@@ -105,12 +109,6 @@ export function VirtualScrollContainerComponent(props: VirtualScrollContainerCom
             return;
         }
 
-        // Turn off auto refresh of the datasource
-        if (data.status === ValueStatus.Available) {
-            // data.setLimit(0);
-            dataRef.current.itemsLoadedCount = data.items ? data.items.length : 0;
-        }
-
         const frameId = requestAnimationFrame(() => {
             requestAnimationFrame(() => {
                 if (logToConsole) {
@@ -124,6 +122,42 @@ export function VirtualScrollContainerComponent(props: VirtualScrollContainerCom
             cancelAnimationFrame(frameId);
         };
     }, [data.items, logToConsole]);
+
+    const { content } = props;
+
+    useEffect(() => {
+        if (data.status !== dataRef.current.previousDatasourceValueStatus) {
+            if (logToConsole) {
+                console.info(
+                    "VirtualScrollContainerComponent: Datasource status change from " +
+                        dataRef.current.previousDatasourceValueStatus +
+                        " to " +
+                        data.status
+                );
+            }
+            if (data.status === ValueStatus.Available) {
+                if (data.items) {
+                    if (logToConsole) {
+                        console.info("VirtualScrollContainerComponent: Load data");
+                    }
+                    dataRef.current.itemsLoadedCount = data.items.length;
+                    dataRef.current.listRows = data.items.map((item, index) => (
+                        <div key={item.id} className={`virtual-scroll-container-item item-${index}`}>
+                            {content.get(item)}
+                        </div>
+                    ));
+                    // Turn off auto refresh of the datasource
+                    data.setLimit(0);
+                } else {
+                    if (logToConsole) {
+                        console.info("VirtualScrollContainerComponent: No data");
+                    }
+                    dataRef.current.itemsLoadedCount = 0;
+                }
+            }
+            dataRef.current.previousDatasourceValueStatus = data.status;
+        }
+    }, [content, data, data.status, logToConsole]);
 
     const handleScroll = (): void => {
         const container = layoutRef.current;
@@ -139,12 +173,6 @@ export function VirtualScrollContainerComponent(props: VirtualScrollContainerCom
         return <div className={className}></div>;
     }
 
-    const { content } = props;
-    dataRef.current.listRows = data.items.map((item, index) => (
-        <div key={item.id} className={`virtual-scroll-container-item item-${index}`}>
-            {content.get(item)}
-        </div>
-    ));
     return (
         <div className={className} ref={layoutRef} onScroll={handleScroll}>
             {dataRef.current.listRows}
